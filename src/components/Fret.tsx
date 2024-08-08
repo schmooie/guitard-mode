@@ -1,3 +1,3 @@
 export default function Fret() {
-  return <div>Hi!</div>
+  return <div className="border-b-2">Hi!</div>
 }
