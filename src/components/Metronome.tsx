@@ -16,7 +16,7 @@ export default function Metronome({
   setBpm,
 }: MetronomePropTypes) {
 
-  const togglePlay = (e) => {
+  const togglePlay = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setIsPlaying(!isPlaying);
   }

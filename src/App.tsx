@@ -14,7 +14,7 @@ const triad = Chord.degrees("Cm");
 
 
 const GUITAR_STRINGS = ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'];
-const FRETBOARD_NOTES = GUITAR_STRINGS
+const FRETBOARD_NOTES: string[][] = GUITAR_STRINGS
   .map(note => Scale.get(`${note} chromatic`).notes);
 const DEFAULT_BPM = 120;
 const BEATS_PER_NOTE = 4;
@@ -72,7 +72,7 @@ function App() {
     return shuffle(FRETBOARD_NOTES[index]);
   }
 
-  function onFretClick(strings) {
+  function onFretClick(strings: number[]) {
     for (let i = 0; i < strings.length; i++) {
       if (strings[i] !== -1 && i !== activeStringIdx) {
         setNotes(getNotesForActiveString(i));
@@ -116,7 +116,7 @@ function getStrings(stringIdx: number, note: string) {
   return strings;
 }
 
-function shuffle(arr: []) {
+function shuffle(arr: string[]) {
   const clone = arr.slice();
   let currentIndex = arr.length;
 
