@@ -32,7 +32,6 @@ function App() {
 
   useEffect(() => {
     const beepEveryMs = SECONDS_IN_MINUTE / bpm * MS_IN_SECOND;
-    const click = new Audio('public/Synth_Tick_C_lo.wav');
     const synth = new Tone.Synth().toDestination();
     let skipClick = false;
 
@@ -59,7 +58,7 @@ function App() {
       setCurrentBeat(beat);
 
       if (!skipClick) {
-        click.play();
+        synth.triggerAttackRelease('1', "16n", Tone.now());
       } else {
         synth.triggerAttackRelease(currentNote, "16n", Tone.now());
       }
