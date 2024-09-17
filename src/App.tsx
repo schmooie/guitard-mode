@@ -1,14 +1,25 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import Fret from './components/Fret'
 import './App.css'
+import Guitar, { getRenderFingerSpn } from 'react-guitar'
+import { standard } from 'react-guitar-tunings'
+// import useSound from 'react-guitar-sound'
+import { Chord } from 'tonal'
+import Metronome from './components/Metronome'
+
+const triad = Chord.degrees("Cm");
+[1, 2, 3].map(triad); // => ["C", "Eb", "G"];
+[2, 3, 1].map(triad); // => ["Eb", "G", "C"];
+[3, 1, 2].map(triad); // => ["G", "C", "Eb"];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [strings, setStrings] = useState([0, 1, 2, 2, 0, -1])
+  // const { play, strum } = useSound({ fretting: strings, tuning: standard })
 
   return (
-    <Fret />
+    <>
+      <Guitar strings={strings} renderFinger={getRenderFingerSpn(standard)} onChange={setStrings}/>
+      <Metronome />
+    </>
   )
 }
 
