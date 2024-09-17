@@ -1,39 +1,28 @@
-import { useEffect, useState } from "react"
-
 export interface MetronomePropTypes {
-  initialBpm?: number,
+  bpm: number,
+  setBpm: (number: number) => void,
+  isPlaying: boolean,
+  setIsPlaying: (isPlaying: boolean) => void,
   minBpm?: number,
   maxBpm?: number,
 }
 
-const SECONDS_IN_MINUTE = 60;
-const MS_IN_SECOND = 1000;
-
 export default function Metronome({
-  initialBpm = 80,
+  bpm = 80,
   minBpm = 0,
   maxBpm = 200,
+  isPlaying,
+  setIsPlaying,
+  setBpm,
 }: MetronomePropTypes) {
-    const [bpm, setBpm] = useState(initialBpm);
-    const [isPlaying, setIsPlaying] = useState(false);
 
-    useEffect(() => {
-      if (!isPlaying) {
-        return;
-      }
-
-      const beepEveryMs = SECONDS_IN_MINUTE / bpm * MS_IN_SECOND;
-      const click = new Audio('public/Synth_Tick_C_lo.wav');
-
-      const intervalId = setInterval(() => {
-        click.play();
-      }, beepEveryMs);
-
-      return () => clearInterval(intervalId);
-    }, [bpm, isPlaying])
+  const togglePlay = (e) => {
+    e.preventDefault();
+    setIsPlaying(!isPlaying);
+  }
 
   return (
-    <section className="p-2 flex items-center">
+    <form className="p-2 flex items-center" onSubmit={togglePlay}>
       <label className="flex items-center">
         <span className="font-semibold text-2xl">BPM:&nbsp;</span>
         <input
@@ -46,11 +35,12 @@ export default function Metronome({
         />
       </label>
       <button
-        className="bg-red-400 active:bg-red-500"
-        onClick={() => setIsPlaying(!isPlaying)}
+        type="submit"
+        className="ml-2 text-sm bg-red-400 active:bg-red-500"
+        onClick={togglePlay}
       >
         {isPlaying ? 'Pause' : 'Play'}
       </button>
-    </section>
+    </form>
   )
 }
